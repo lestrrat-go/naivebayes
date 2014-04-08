@@ -5,7 +5,7 @@ import (
   "math"
 )
 
-const DEFAULT_PROBABILITY = 0.00000000001
+const DefaultProbability = 0.00000000001
 
 
 type Classifier interface {
@@ -80,7 +80,7 @@ func (c *NaiveBayes) GetPriorProbabilities() (map[string]float64, error) {
   }
 
   if sum <= 0 {
-    return nil, errors.New("Sum of all words are 0. No words registered?")
+    return nil, errors.New("error: Sum of all words are 0. No words registered?")
   }
 
   for klass, count := range priors {
@@ -199,15 +199,15 @@ func (c *NaiveBayes) GetSafeProbabilities(document []string) (*Result, error) {
   }
 
   if len(maxClasses) != len(maxLogClasses) {
-    return nil, errors.New("Possible underflow detected")
+    return nil, errors.New("error: Possible underflow detected")
   }
 
   for k, v := range maxClasses {
     if len(maxLogClasses) >= k {
-      return nil, errors.New("Possible underflow detected")
+      return nil, errors.New("error: Possible underflow detected")
     }
     if vlog := maxLogClasses[k]; vlog != v {
-      return nil, errors.New("Possible underflow detected")
+      return nil, errors.New("error: Possible underflow detected")
     }
   }
 
@@ -217,7 +217,7 @@ func (c *NaiveBayes) GetSafeProbabilities(document []string) (*Result, error) {
 func (c *NaiveBayes) Classes() []string {
   ret := make([]string, len(c.storages))
   i   := 0
-  for k, _ := range c.storages {
+  for k := range c.storages {
     ret[i] = k
     i++
   }
