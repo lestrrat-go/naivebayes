@@ -54,7 +54,7 @@ func (s *InMemoryStorage) Iter() <-chan StorageItem {
 func (s *InMemoryStorage) GetWordProbability(word string) float64 {
   value, ok := s.Get(word)
   if ! ok {
-    return DEFAULT_PROBABILITY
+    return DefaultProbability
   }
   return float64(value) / float64(s.total)
 }
